@@ -1,18 +1,18 @@
 from display import Display
 from input_validator import InputValidator
+import curses
+from curses import wrapper
 
-def main():
+def main(stdscr):
     displayer = Display()
     input_validator = InputValidator()
-    template_string = displayer.generate_string(displayer.level_content)
-    print(template_string)
-    input_validator.update_template_string(template_string)
-    counter = 10
-    while(counter):
-        input_validator.on_press()
-        counter -= 1
-        continue
+    input_validator.template_string = displayer.generate_string(displayer.level_content)
+    #Main loop
+    error = 0
+    stdscr.addstr(input_validator.template_string)
+    while(error != 1):
+        error = input_validator.get_key(stdscr)
     
 
 if __name__ == "__main__":
-    main()
+    wrapper(main)

@@ -20,4 +20,6 @@ class Display():
         for x in range(0, 30):
             letter_index = random.randrange(len(level_content_list))
             generated_string.append(level_content_list[letter_index])
-        return ''.join(generated_string)
+        return ''.join(generated_string) + "\n"
+
+    

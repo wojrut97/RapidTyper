@@ -16,23 +16,31 @@ class InputValidator():
 
 #    POZDRO MARCIN MORDECZKO!!!
 
-
-    def on_press(self):
-        c = readchar.readkey()
-        # print("Wcisnąłeś: ", c)
-        if(c != '' or c != chr(13)):
-            self.user_input_str += c
-            print(c, end='', flush=True)
-        elif(c == chr(13)):
+    def get_key(self, stdscr):
+        c = stdscr.getkey()
+        error = self.validate(c, stdscr)
+        return error
+   
+    def validate(self, c, stdscr):
+        if c == 'q':
+            return 1    #quit
+        elif c == '\n':
             pass
-
-    def validate(self):
-        if(self.user_input_list):
-            if(self.user_input_list[-1] == self.template_string[len(self.user_input_list) - 1]):
-                print(colors.colors.lightgrey + self.user_input_list[-1], end = '')
+            # return 2  #pass
+        elif c == "KEY_BACKSPACE":
+            stdscr.delch(1, len(self.user_input_list)) # Usuwanie ostatniego znaku tak z listy jak i z konsoli
+            if self.user_input_list:
+                self.user_input_list.pop()
+            stdscr.refresh()
+            return 0
+        else:
+            self.user_input_list.append(c)  # Dodaje wpisany klawisz do listy i sprawdza czy zgadza sie z templatem
+            if self.user_input_list[-1] == self.template_string[len(self.user_input_list) - 1]:
+                stdscr.addch(c)  # wypisuje poprawny
             else:
-                print(colors.colors.red + self.user_input_list[-1], end = '')
-
-    def update_template_string(self, template_string):
-        self.template_string = template_string
+                stdscr.standout()  # Wypisuje ze bledny
+                stdscr.addch(c)
+                stdscr.standend()
+                #self.user_input_list.pop()
+            return 0
 
