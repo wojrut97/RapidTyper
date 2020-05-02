@@ -1,10 +1,16 @@
 {
     "levels":{
         "1":{
-            "keys": "j,k,f,d"
+            "keys": "j,k,f,d",
+            "colors": 1
         },
         "2":{
-            "keys": "j,k,f,d,s,l"
+            "keys": "j,k,f,d,s,l",
+            "colors": 0
+        },
+        "3":{
+            "keys": "j,k,l,;,a,s,d,f",
+            "colors": 1
         }
     }
 }
